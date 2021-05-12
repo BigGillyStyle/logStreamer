@@ -1,0 +1,10 @@
+node_modules
+automation
+config
+coverage
+dist
+governance
+
+newrelic.js
+.eslintrc.js
+tsconfig*

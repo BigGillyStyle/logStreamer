@@ -2,13 +2,18 @@
   "name": "logstreamer",
   "version": "1.0.0",
   "description": "Simple Express server that streams log files",
-  "main": "src/app.ts",
+  "main": "src/server.ts",
   "engines": {
     "node": "^14.16.1",
     "npm": "^7.12.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig.app.json",
+    "clean": "rimraf ./dist",
+    "dev": "nodemon",
+    "start": "node ./dist/server.js",
+    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=tsconfig.test.json LOG_LEVEL=fatal jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -19,5 +24,58 @@
   "bugs": {
     "url": "https://github.com/BigGillyStyle/logStreamer/issues"
   },
-  "homepage": "https://github.com/BigGillyStyle/logStreamer#readme"
+  "homepage": "https://github.com/BigGillyStyle/logStreamer#readme",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "http-terminator": "^3.0.0",
+    "pino": "^6.11.3",
+    "pino-http": "^5.5.0",
+    "pino-pretty": "^4.8.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.11",
+    "@types/http-terminator": "^2.0.1",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^14.14.44",
+    "@types/pino": "^6.3.8",
+    "@types/pino-http": "^5.4.1",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-security-node": "^1.0.14",
+    "husky": "^4.3.8",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.4",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.0",
+    "rimraf": "^3.0.2",
+    "supertest": "^6.1.3",
+    "ts-jest": "^26.5.6",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts}": "eslint --cache --fix",
+    "*.{ts,md}": "prettier --write"
+  }
 }
