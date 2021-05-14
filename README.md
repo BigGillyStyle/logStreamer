@@ -20,7 +20,7 @@ logStreamer is an Express server with a single endpoint: `/logs`, which returns 
 1. Quick run on local machine: `npm run dev` (starts server with Nodemon, watching for file changes to restart)
 1. Send a request for a file within `/var/log` on the local machine:
    ```shell
-   curl "http://localhost:3000/logs?filename=fsck_apfs.log&numEvents=3&search=QUICKCHECK"
+   curl "http://localhost:3000/logs?filename=<some filename>&numEvents=<integer>&search=<search text>"
    ```
    1. Query parameters:
       1. `filename`: (required) Name of log file (can include relative directory path)
