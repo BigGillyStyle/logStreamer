@@ -2,10 +2,10 @@
   "coverageReporters": ["html", "text-summary"],
   "coverageThreshold": {
     "global": {
-      "statements": 93,
-      "branches": 50,
-      "functions": 66,
-      "lines": 92
+      "statements": 70,
+      "branches": 32,
+      "functions": 35,
+      "lines": 67
     }
   },
   "preset": "ts-jest",

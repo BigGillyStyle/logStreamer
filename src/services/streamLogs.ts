@@ -7,9 +7,12 @@ import { LogRequestQuery } from '../types/LogRequestQuery';
 
 export const createLogStreams = (
   query: LogRequestQuery
-): [Readable, FilterStream, LineLimitStream, Transform] => [
-  createReverseReadStream(query.filename),
-  new FilterStream(query.search),
-  new LineLimitStream(query.numEvents),
-  createAddNewLineStream(),
-];
+): [Readable, FilterStream, LineLimitStream, Transform] => {
+  const sourceStream = createReverseReadStream(query.filename);
+  return [
+    sourceStream,
+    new FilterStream(query.search),
+    new LineLimitStream(query.numEvents, sourceStream),
+    createAddNewLineStream(),
+  ];
+};
