@@ -13,7 +13,8 @@
     "clean": "rimraf ./dist",
     "dev": "nodemon",
     "start": "node ./dist/server.js",
-    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=tsconfig.test.json LOG_LEVEL=fatal jest --coverage"
+    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=tsconfig.test.json LOG_LEVEL=fatal jest --coverage",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",

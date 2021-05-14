@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { HttpError } from '../errors/HttpException';
 import { logger } from '../services/logger';
 
 export const errorHandler = (
@@ -8,5 +9,9 @@ export const errorHandler = (
   _next: NextFunction
 ): void => {
   logger.error(err);
-  res.status(500).json({ error: err.message });
+
+  const status = err instanceof HttpError ? err.status : 500;
+  const message = err.message || 'Something went wrong';
+
+  res.status(status).json({ message });
 };
