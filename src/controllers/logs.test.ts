@@ -2,6 +2,8 @@ import request from 'supertest';
 
 import { app } from '../app';
 
+// These tests are obviously not very comprehensive but for now serve to demonstrate a
+// typical integration test for the endpoint
 describe('/logs', () => {
   it('should return an error message when the filename attempts to traverse directories', async () => {
     const { body, status } = await request(app).get(

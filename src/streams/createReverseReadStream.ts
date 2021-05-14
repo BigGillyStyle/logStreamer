@@ -2,10 +2,11 @@
 // @ts-ignore
 import fsReverse from 'fs-reverse';
 import { Readable } from 'stream';
+
 import { LogRequestQuery } from '../types/LogRequestQuery';
 
 // I'm guessing you would've preferred that I implement the logic that 'fs-reverse' provides.
-// I have several years of Node experience, but most all of it was *not* dealing with the
+// I have several years of Node experience, but most all of it has *not* dealing with the
 // file system and buffers...and within the 4-hour time limit you provided I did not
 // have great confidence in my ability to both (1) show my ability to write an
 // app of sufficient quality AND (2) write this logic.

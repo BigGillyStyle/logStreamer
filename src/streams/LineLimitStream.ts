@@ -1,4 +1,5 @@
 import { Readable, Transform, TransformCallback } from 'stream';
+
 import { LogRequestQuery } from '../types/LogRequestQuery';
 
 export class LineLimitStream extends Transform {

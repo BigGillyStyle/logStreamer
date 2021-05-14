@@ -1,4 +1,5 @@
 import { Transform, TransformCallback } from 'stream';
+
 import { LogRequestQuery } from '../types/LogRequestQuery';
 
 export class FilterStream extends Transform {

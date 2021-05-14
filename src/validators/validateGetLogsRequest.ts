@@ -34,7 +34,10 @@ export const validateGetLogsRequest = async (
     throw new HttpError(400, "Invalid 'filename' query parameter");
   }
 
-  let numEvents: number | undefined = parseInt(query.numEvents as string, 10);
+  let numEvents: LogRequestQuery['numEvents'] = parseInt(
+    query.numEvents as string,
+    10
+  );
   if (Number.isNaN(numEvents)) {
     // do not limit number of events if number cannot be parsed
     numEvents = undefined;
