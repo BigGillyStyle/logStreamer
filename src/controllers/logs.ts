@@ -1,17 +1,18 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import path from 'path';
+import { pipeline } from 'stream';
+import { promises as fsPromises } from 'fs';
 
 import { HttpError } from '../errors/HttpException';
-
-interface LogRequestQuery {
-  filename: string;
-  numEvents?: string;
-  search?: string;
-}
+import { logger } from '../services/logger';
+import { createLogStreams } from '../services/streamLogs';
+import { LogRequestQuery } from '../types/LogRequestQuery';
 
 const rootLogDir = '/var/log/';
 
-const validateRequest = (query: Record<string, unknown>): LogRequestQuery => {
+const validateRequest = async (
+  query: Record<string, unknown>
+): Promise<LogRequestQuery> => {
   let filename = query.filename as string;
 
   if (!filename) {
@@ -29,15 +30,42 @@ const validateRequest = (query: Record<string, unknown>): LogRequestQuery => {
     throw new HttpError(400, "Invalid 'filename' query parameter");
   }
 
+  try {
+    await fsPromises.stat(filename);
+  } catch (err) {
+    logger.error(err);
+    throw new HttpError(400, "Invalid 'filename' query parameter");
+  }
+
+  let numEvents: number | undefined = parseInt(query.numEvents as string, 10);
+  if (Number.isNaN(numEvents)) {
+    numEvents = undefined;
+  }
+
   return {
     filename,
-    numEvents: query.numEvents as string,
+    numEvents,
     search: query.search as string,
   };
 };
 
-export const getLogs = (req: Request, res: Response): void => {
-  const query = validateRequest(req.query);
+export const getLogs = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const query = await validateRequest(req.query);
 
-  res.status(200).json({ status: 'ok' });
+    const streams = createLogStreams(query);
+
+    pipeline(...streams, res, (err) => {
+      if (err) {
+        logger.error(err);
+        throw new HttpError(500, err.message);
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
 };
