@@ -12,7 +12,7 @@ export const createLogStreams = (
   return [
     sourceStream,
     new FilterStream(query.search),
-    new LineLimitStream(query.numEvents, sourceStream),
+    new LineLimitStream(query.numEvents),
     createAddNewLineStream(),
   ];
 };
