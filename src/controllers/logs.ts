@@ -4,6 +4,7 @@ import { pipeline } from 'stream';
 import { HttpError } from '../errors/HttpException';
 import { logger } from '../services/logger';
 import { createLogStreams } from '../services/streamLogs';
+import { registerStreamEvents } from '../utils/streamEventHandlers';
 import { validateGetLogsRequest } from '../validators/validateGetLogsRequest';
 
 export const getLogs = async (
@@ -15,6 +16,7 @@ export const getLogs = async (
     const query = await validateGetLogsRequest(req.query);
 
     const streams = createLogStreams(query);
+    streams.forEach((stream) => registerStreamEvents(stream));
 
     pipeline(...streams, res, (err) => {
       if (err) {

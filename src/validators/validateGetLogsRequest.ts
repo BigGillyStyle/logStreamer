@@ -5,7 +5,7 @@ import { HttpError } from '../errors/HttpException';
 import { logger } from '../services/logger';
 import { LogRequestQuery } from '../types/LogRequestQuery';
 
-const rootLogDir = '/var/log/';
+const rootLogDir = process.env.LOG_DIR as string;
 
 export const validateGetLogsRequest = async (
   query: Record<string, unknown>
