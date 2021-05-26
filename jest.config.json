@@ -2,13 +2,14 @@
   "coverageReporters": ["html", "text-summary"],
   "coverageThreshold": {
     "global": {
-      "statements": 70,
-      "branches": 32,
-      "functions": 35,
-      "lines": 67
+      "statements": 86,
+      "branches": 72,
+      "functions": 72,
+      "lines": 85
     }
   },
   "preset": "ts-jest",
   "testEnvironment": "node",
-  "testRegex": "\\.test\\.ts?$"
+  "testRegex": "\\.test\\.ts?$",
+  "setupFiles": ["<rootDir>/test/setEnvVars.ts"]
 }
