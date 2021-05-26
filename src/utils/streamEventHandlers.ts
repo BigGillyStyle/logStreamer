@@ -30,7 +30,6 @@ const registerWriteableStreamEvents = (stream: Writable): void => {
 };
 
 const registerTransformStreamEvents = (stream: Transform): void => {
-  console.log('Registered transform');
   stream.on('close', () =>
     logger.debug(`${streamName(stream)} "close" event received`)
   );
